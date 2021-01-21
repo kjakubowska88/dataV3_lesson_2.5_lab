@@ -38,7 +38,11 @@ select DATEDIFF('2006-02-14 15:16:03', '2005-05-24 22:53:30') As Days_Opened;
 select *, year(rental_date) as Year, month(rental_date) as month, dayname(rental_date) from rental limit 20;
 
 -- 8 Add an additional column day_type with values 'weekend' and 'workday' depending on the rental day of the week.
-
+select *,  case    	
+   when date_format(rental_date, '%a') in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri') then 'workday'
+   when date_format(rental_date, '%a') in ('Sat', 'Sun') then 'weekend'
+end as day_type
+from sakila.rental;
 
 -- 9 How many rentals were in the last month of activity?
 select date(max(rental_date))  -INTERVAL 30 DAY as max, date(max(rental_date)) as min
